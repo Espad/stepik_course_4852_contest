@@ -4,16 +4,20 @@ from libs.utils.df_utils import safe_drop_cols_df
 DATA_PERIOD_DAYS = 2  # колво дней по которым доступны данные для прогноза
 
 
-def get_x_y(events, submissions):
+def get_x_y(events, submissions, days_num, is_train):
     """" создадим признаки и метку
-     
     Parameters
     ----------
     events: pandas.DataFrame
         действия студентов со степами
     submissions: pandas.DataFrame
         действия студентов по практике     
+        :param is_train: tt
      """
+    if is_train == True:
+        DATA_PERIOD_DAYS = days_num
+    else:
+        DATA_PERIOD_DAYS = 2
     events_train = dh.preprocess_timestamp_cols(events)
     events_train = dh.truncate_data_by_nday(events_train, DATA_PERIOD_DAYS)
 
